@@ -1,0 +1,40 @@
+CREATE TABLE Profesores (
+Nombre VARCHAR (50) NOT NULL UNIQUE,
+Apellido1 VARCHAR (50) NOT NULL UNIQUE,
+Apellido2 VARCHAR (50) NOT NULL UNIQUE,
+DNI VARCHAR(8),
+Direccion VARCHAR (100),
+Titulo VARCHAR (50),
+GANA INT NOT NULL, 
+PRIMARY KEY (DNI)
+);
+
+CREATE TABLE Cursos (
+Nombre_Curso VARCHAR (50) NOT NULL UNIQUE,
+Cod_Curso INT ,
+DNI_Profesor VARCHAR(8),
+Maximo_Alumnos INT,
+Fecha_Inicio DATE,
+Fecha_Fin DATE,
+Num_Horas INT NOT NULL,
+PRIMARY KEY (Cod_Curso),
+CHECK (Fecha_Inicio<Fecha_Fin),
+FOREIGN KEY (DNI_Profesor) REFERENCES Profesores(DNI)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Alumnos (
+Nombre VARCHAR (50),
+Apellido1 VARCHAR(50),
+Apellido2 VARCHAR(50),
+DNI VARCHAR(8),
+Direccion VARCHAR (100),
+Fecha_Nacimiento DATE,
+Sexo CHAR,
+Curso INT NOT NULL,
+PRIMARY KEY (DNI),
+FOREIGN KEY (Curso) REFERENCES Cursos(Cod_Curso)
+ON DELETE CASCADE ON UPDATE CASCADE,
+CHECK (Sexo='H' or 'M')
+);
+
